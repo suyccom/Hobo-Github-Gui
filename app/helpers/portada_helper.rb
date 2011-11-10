@@ -1,0 +1,2 @@
+module PortadaHelper
+end

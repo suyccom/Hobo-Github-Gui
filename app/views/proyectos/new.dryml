@@ -1,0 +1,7 @@
+<new-page>
+  <form:>
+    <before-field-list:>
+      <div>Esta aplicación utiliza Github como backend para gestionar tareas. Antes de crear un nuevo proyecto necesitar un usuario, contraseña y repositorio de Github.</div>
+    </before-field-list:>
+  </form:>
+</new-page>

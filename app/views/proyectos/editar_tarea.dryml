@@ -1,0 +1,23 @@
+<page title="Editar tarea ##{params['tarea']}">
+
+  <content:>
+    <section class="content-header">
+      <h2 class="heading">
+        Editar tarea #<%= params['tarea'] %>
+      </h2>
+    </section>
+
+    <section class="content-body">
+      <form action="/proyectos/#{@proyecto.id}/guardar_tarea?tarea=#{params['tarea']}">
+        <p>Título</p>
+        <input type="text" name="title" style="font-size:20px; width:100%;" value="&@tarea['title']"/>
+        <p>Descripción</p>
+        <textarea name="body" style="font-size:14px; width:100%;"><%= @tarea['body'] %></textarea>
+        <submit label="Modificar tarea"/>
+        <a href="/proyectos/#{@proyecto.id}">Cancelar</a>
+      </form>
+    </section>
+    
+  </content:>
+
+</page>

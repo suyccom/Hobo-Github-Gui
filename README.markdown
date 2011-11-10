@@ -25,3 +25,7 @@ Sistema de feedback y alertas
   
 * Cuando una tarea se complete
   * El cliente recibirá un email informando de que la tarea se ha completado.
+
+Instalación
+===========
+* Crea tu propio fichero config/application.rb a partir del fichero config/application.rb.sample

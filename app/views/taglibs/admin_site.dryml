@@ -1,0 +1,38 @@
+<!-- Tag definitions for the admin subsite -->
+
+<include src="rapid" gem="hobo"/>
+
+<include src="taglibs/auto/admin/rapid/cards"/>
+<include src="taglibs/auto/admin/rapid/pages"/>
+<include src="taglibs/auto/admin/rapid/forms"/>
+
+<set-theme name="nice"/>
+
+
+
+<extend tag="page">
+  <old-page merge>
+    <append-stylesheets:>
+<!--      <stylesheet name="admin"/>-->
+    </append-stylesheets:>
+    <footer:>
+      <a href="http://www.e-cotec21.org">e-Cotec21</a>
+    </footer:>
+  </old-page>
+</extend>
+
+<extend tag="card" for="Usuario">
+  <old-card merge>
+    <append-header:><%= h this.state.titleize %></append-header:>
+  </old-card>
+</extend>
+
+
+<!-- ====== Main Navigation ====== -->
+
+<def tag="main-nav">
+  <navigation class="main-nav" merge-attrs param="default">
+    <nav-item href="#{base_url}/">Proyectos</nav-item>
+    <nav-item with="&Usuario"><ht key="usuario.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+  </navigation>
+</def>

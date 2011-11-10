@@ -1,0 +1,5 @@
+<accept-invitation-page>
+  <after-heading:>
+    <p>Bienvenido a la aplicación de mantenimiento de e-Cotec21, <name/>. Para aceptar tu invitación, por favor introduce tu contraseña.</p>
+  </after-heading:>
+</accept-invitation-page>

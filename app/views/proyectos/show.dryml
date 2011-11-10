@@ -1,0 +1,115 @@
+<show-page>
+  <field-list: replace>
+    
+    <div>
+    <% if params[:completadas] %>
+    
+    <a class="pestana">Tareas pendientes</a>
+    <div class="pestana seleccionada" href="?">Tareas completadas</div>  
+    
+    <% else %>
+
+    <div class="pestana seleccionada">Tareas pendientes</div>
+    <a class="pestana" href="?completadas=true">Tareas completadas</a>
+
+    <% end %>
+    &nbsp;<br/><br/>
+    </div>
+
+    <repeat with="&@tareas">
+      <%
+        if (this['body'].split(':').first && this['body'].split(':').first.split('Tarea creada por ').last == current_user.name)
+          editable = true
+        else
+          editable = false
+        end
+      %>
+    
+      <card class="tarea">
+        <header:>
+
+          <a title="Notas" href="#" style="float:right" onclick="$('notas-#{this['id']}').toggle(); return false;">
+            <img src="/images/notes_off.png"/>
+          </a>
+          
+          
+          <% ruta_cerrar = "/proyectos/" + @proyecto.id.to_s + "/borrar_tarea?tarea=" + this['number'].to_s %>
+          <a title="Cerrar tarea" href="&ruta_cerrar" style="float:right; margin-right:5px;" onclick="return confirm('¿Estás seguro de que quieres cerrar esta tarea?');" if="&editable">
+            <img src="/images/delete_off.png"/>
+          </a>
+          
+          <% ruta_editar = "/proyectos/" + @proyecto.id.to_s + "/editar_tarea?tarea=" + this['number'].to_s %>
+          <a title="Editar tarea" href="&ruta_editar" style="float:right; margin-right:5px;" if="&editable">
+            <img src="/images/edit_off.png"/>
+          </a>
+
+          
+          
+          <h4>#<%= this['number'] %> <%= this['title'] %></h4>
+        </header:>
+        <body:>
+          <div id="notas-#{this['id']}" style="display:none;">
+        
+          <%= simple_format(this['body']) %>
+
+
+
+
+          <% if this['state'] == 'closed' %>
+          <div style="padding:9px; border-radius:5px; background-color:#D3FF82;
+          font-size:1.2em;font-style:italic; margin-top:10px;">
+            Tarea cerrada el <%= l this['closed_at'].to_date %><br/>
+          </div>
+          
+
+          <% elsif this['assignee'] %>
+          <div style="padding:9px; border-radius:5px; background-color:#D3FF82;
+          font-size:1.2em;font-style:italic; margin-top:10px;">
+            Tarea asignada a <%= nombre_tecnico(this['assignee']['login']) %>, creada el <%= l this['created_at'].to_date %><br/>
+          </div>
+          <% else %>
+          <div style="padding:9px; border-radius:5px; background-color:#FFF682;
+          font-size:1.2em;font-style:italic; margin-top:10px;">
+            Tarea nueva creada el <%= l this['created_at'].to_date %><br/>
+          </div>
+                      
+          
+          <% end %>
+          
+          </div>
+          
+          
+          
+        </body:>
+      </card>
+    </repeat>
+
+    
+    
+    
+  </field-list:>
+  
+  
+  
+  
+  <append-aside:>
+    <div class="section">
+      <h3>Añadir nueva tarea</h3>
+      <form action="/proyectos/#{this.id}/nueva_tarea" method="POST">
+        <p>Título</p>
+        <input type="text" name="title" style="font-size:20px; width:100%;"/>
+        <p>Descripción</p>
+        <textarea name="body" style="font-size:14px; width:100%;"></textarea>
+        <submit label="Añadir tarea"/>
+      </form>
+    </div>
+  </append-aside:>
+  
+  
+  
+  
+  
+  
+  
+  
+</show-page>

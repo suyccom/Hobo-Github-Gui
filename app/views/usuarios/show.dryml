@@ -1,0 +1,5 @@
+<show-page>
+  <after-field-list:>
+    <h2><a style="background-color:#C8EBC6; padding:30px;" href="/">Ir a los proyectos</a></h2>
+  </after-field-list:>
+</show-page>

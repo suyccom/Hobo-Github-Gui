@@ -1,0 +1,173 @@
+<!-- Modify the page -->
+<extend tag="page">
+  <old-page merge>
+  
+    <!-- Theme stylesheets -->
+    <stylesheets: param>
+      <stylesheet name="reset"/>
+      <theme-stylesheet/>
+      <theme-stylesheet name="rapid-ui"/>
+      <stylesheet name="application" param="app-stylesheet"/>
+      <!-- Load a nice font for the title -->
+      <link href='http://fonts.googleapis.com/css?family=Droid+Sans:700' rel='stylesheet' type='text/css'/>
+    </stylesheets:>
+    
+    <!-- Move live-search to top right -->
+    <before-account-nav:>
+      <live-search param if="&defined_route? :site_search"/>
+    </before-account-nav:>
+    <live-search: replace/>
+    
+    <!-- Get rid of the account link -->
+    <account-nav:>
+      <account: replace/>
+    </account-nav:>
+       
+    <!-- Tidy Up the flash notices -->
+    <flash-messages: replace/>
+    <before-content:>
+      <flash-messages if="&flash"/>
+      <% flash[:notice]='' %>
+      <% flash[:error]='' %>
+    </before-content:>
+    
+  </old-page>
+</extend>
+
+
+<!-- Customise live-search to use a placeholder -->
+<def tag="live-search">
+  <div class="search">
+    <input type="search" class="live-search" placeholder="&translate('hobo.live_search.label', :default=>'Search...')"/>
+    <spinner id="search-spinner"/>
+  </div>
+  <section class="hidden" id="search-results-panel">
+    <h2><t key="hobo.live_search.results_label">Search Results</t></h2><div param="close-button"><t key="hobo.live_search.close_button">close</t></div>
+    <section id="search-results">&nbsp;</section>
+  </section>
+</def>
+
+
+
+<!-- Remove page-nav in table-plus by default -->
+<extend tag="table-plus">
+  <old-table-plus merge>
+    <page-nav: replace/>
+  </old-table-plus>
+</extend>
+
+
+<!-- FIXME Translate 'Not Available' (to be integrated into Hobo) -->
+<def tag="nil-view"><%= scope.nil_view || translate('hobo.messages.nil', :default => '(Not Available)') %></def>
+
+
+
+<!-- Make the nav items work with "current" in the show, edit and new  -->
+<def tag="nav-item" attrs="name">
+  <% body = parameters.default
+     body = h(this.to_s) if body.blank?
+     name ||= body.gsub(/<.*?>/, '').strip.downcase.split(' ').last.pluralize
+     if (c = scope.current_navigation)
+       current = c.downcase.split(' ').last.pluralize
+     end
+  -%>
+  <li class="#{'current' if current == name}"
+      merge-attrs="&attributes - (attrs_for(:a)+['target'])">
+    <a merge-attrs="&attributes & (attrs_for(:a)+['target'])"><%= body %></a>
+  </li>
+</def>
+
+
+
+<!-- Index page: remove counter and top-page-nav from index pages -->
+<extend tag="index-page">
+  <old-index-page merge>
+    <count: replace/>
+    <top-page-nav: replace/>
+  </old-index-page>
+</extend>
+
+
+<!-- Show page -->
+<extend tag="show-page">
+  <old-show-page merge>
+    <!-- Hide the edit-link (nice-aside will take care of it) -->
+    <edit-link: replace/>
+    
+    <!-- Enable aside by default -->
+    <aside: replace>
+    </aside:>
+    <prepend-content:>
+      <aside>
+        <nice-aside/>
+      </aside>
+    </prepend-content:>
+    
+    <!-- Use a nice breadcrumb -->
+    <heading:>
+      <a with="&model">
+      <t key="activerecord.models.#{model.to_s.downcase}.other">
+        <%= model.to_s.pluralize %>
+      </t></a> >
+      <name/>
+    </heading:>
+    
+  </old-show-page>
+</extend>
+
+
+<!-- This tag builds the aside in the show-page -->
+<def tag="nice-aside">
+  <!-- Edit link -->
+  <div class='section' if="&can_edit?">
+    <h3>Actions</h3>
+    <a action="edit" param="edit-link">
+      <ht key="#{model.to_s.downcase}.actions.edit">Edit <%= model.to_s %></ht>
+    </a>
+  </div> 
+  
+  <!-- Transitions (if possible) -->
+  <div if="&this.lifecycle" class='section'>
+    <h3>Transitions</h3>
+    <transition-buttons/>
+  </div>
+  
+  <!-- Cycle through the children (not DRY but works well 
+    without modifying the generators)-->
+  <%
+  unless model.view_hints.secondary_children.empty?
+  aside_collections = model.view_hints.secondary_children.map { |c| [model.reflections[c], model.reverse_reflection(c)] }
+  -%>
+  
+  <% for refl, reverse_refl in aside_collections -%>
+    <div class='section'>
+      <h3>
+        <ht key="#{refl.klass.to_s.underscore}.collection.heading">
+          <human-collection-name collection="#{refl.name}" your/>
+        </ht>
+      </h3>
+      <% test = 'this.' + refl.name.to_s %>
+      <collection: with="&eval(test)"/>
+    </div>
+  <%   end 
+  end -%>
+
+</def>
+
+
+
+<!-- New page -->
+<extend tag="new-page">
+  <old-new-page merge>
+    <!-- Use a nice breadcrumb -->
+    <heading:>
+      <a with="&model">
+      <t key="activerecord.models.#{model.to_s.underscore}.other">
+        <%= model.to_s.pluralize %>
+      </t></a> >
+      <ht key="#{model.to_s.underscore}.new.heading">
+        New <%= model.to_s %>
+      </ht>
+    </heading:>
+  </old-new-page>
+</extend>

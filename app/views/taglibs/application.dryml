@@ -1,0 +1,33 @@
+<!-- Global taglib - these tags are shared across all subsites -->
+
+<include src="rapid" gem="hobo"/>
+
+<include src="taglibs/auto/rapid/cards"/>
+<include src="taglibs/auto/rapid/pages"/>
+<include src="taglibs/auto/rapid/forms"/>
+
+<set-theme name="nice"/>
+
+<extend tag="page">
+  <old-page merge>
+    <app-name:>Mantenimiento e-Cotec21</app-name:>
+    
+    <live-search: replace/>
+  
+    <footer:>
+      <a href="http://www.e-cotec21.org">e-Cotec21</a>
+    </footer:>
+  </old-page>
+</extend>
+
+
+
+<!-- ====== Main Navigation ====== -->
+
+<def tag="main-nav">
+  <navigation class="main-nav" merge-attrs param="default">
+    <nav-item with="&Proyecto"><ht key="proyecto.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+    
+    <nav-item href="&admin_usuarios_url" if="&current_user.administrator?">Usuarios</nav-item>
+  </navigation>
+</def>

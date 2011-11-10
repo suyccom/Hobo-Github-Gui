@@ -1,0 +1,18 @@
+.card p{
+  margin-bottom:5px;
+}
+
+
+.pestana{
+  display:block;
+  float:right;
+  padding:5px 10px;
+  font-weight:bold;
+  border-radius:8px;
+  margin-left:10px;
+}
+
+.pestana.seleccionada{
+  background-color:#0B9500;
+  color:white;
+}
