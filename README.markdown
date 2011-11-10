@@ -1,4 +1,5 @@
-== Bienvenido a Hobo-Github-Gui
+Bienvenido a Hobo-Github-Gui
+============================
 
 Esta aplicación tiene como objetivo ofrecer una interfaz sencilla de las tareas de GitHUb (Issues) a potenciales clientes.
 
@@ -12,7 +13,8 @@ Esta aplicación tiene como objetivo ofrecer una interfaz sencilla de las tareas
   * Ver las tareas pendientes de ese proyecto
   * Añadir una nueva tarea
 
-== Sistema de feedback y alertas
+Sistema de feedback y alertas
+=============================
   
 * Cuando el cliente añada una nueva tarea:
   * El cliente recibirá un email confirmando que la tarea se ha añadido correctamente
