@@ -7,6 +7,8 @@ Sgmantenimiento::Application.routes.draw do
   match 'proyectos/:id/borrar_tarea' => 'proyectos#borrar_tarea', :as => :proyecto
   match 'proyectos/:id/editar_tarea' => 'proyectos#editar_tarea', :as => :proyecto
   match 'proyectos/:id/guardar_tarea' => 'proyectos#guardar_tarea', :as => :proyecto
+  
+  match 'exportar_tracks' => 'portada#exportar_tracks', :as => 'exportar_tracks'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -5,16 +5,6 @@
 Sgmantenimiento::Application.routes.draw do
 
 
-  # Resource routes for controller "proyectos"
-  get 'proyectos(.:format)' => 'proyectos#index', :as => 'proyectos'
-  get 'proyectos/new(.:format)', :as => 'new_proyecto'
-  get 'proyectos/:id/edit(.:format)' => 'proyectos#edit', :as => 'edit_proyecto'
-  get 'proyectos/:id(.:format)' => 'proyectos#show', :as => 'proyecto', :constraints => { :id => %r([^/.?]+) }
-  post 'proyectos(.:format)' => 'proyectos#create', :as => 'create_proyecto'
-  put 'proyectos/:id(.:format)' => 'proyectos#update', :as => 'update_proyecto', :constraints => { :id => %r([^/.?]+) }
-  delete 'proyectos/:id(.:format)' => 'proyectos#destroy', :as => 'destroy_proyecto', :constraints => { :id => %r([^/.?]+) }
-
-
   # Lifecycle routes for controller "usuarios"
   put 'usuarios/:id/accept_invitation(.:format)' => 'usuarios#do_accept_invitation', :as => 'do_usuario_accept_invitation'
   get 'usuarios/:id/accept_invitation(.:format)' => 'usuarios#accept_invitation', :as => 'usuario_accept_invitation'
@@ -35,6 +25,16 @@ Sgmantenimiento::Application.routes.draw do
   match 'usuario_login(.:format)' => 'usuarios#login', :as => 'usuario_login'
   get 'usuario_logout(.:format)' => 'usuarios#logout', :as => 'usuario_logout'
   match 'usuario_forgot_password(.:format)' => 'usuarios#forgot_password', :as => 'usuario_forgot_password'
+
+
+  # Resource routes for controller "proyectos"
+  get 'proyectos(.:format)' => 'proyectos#index', :as => 'proyectos'
+  get 'proyectos/new(.:format)', :as => 'new_proyecto'
+  get 'proyectos/:id/edit(.:format)' => 'proyectos#edit', :as => 'edit_proyecto'
+  get 'proyectos/:id(.:format)' => 'proyectos#show', :as => 'proyecto', :constraints => { :id => %r([^/.?]+) }
+  post 'proyectos(.:format)' => 'proyectos#create', :as => 'create_proyecto'
+  put 'proyectos/:id(.:format)' => 'proyectos#update', :as => 'update_proyecto', :constraints => { :id => %r([^/.?]+) }
+  delete 'proyectos/:id(.:format)' => 'proyectos#destroy', :as => 'destroy_proyecto', :constraints => { :id => %r([^/.?]+) }
 
   namespace :admin do
 

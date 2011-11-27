@@ -1,0 +1,32 @@
+<repeat with="&@proyectos">
+  <%
+  
+    url = 'https://api.github.com/repos/' + this.usuario_github + '/' + this.repositorio_github + '/issues'
+    url += '?state=closed'
+    
+    
+    uri = URI.parse(url)
+    peticion = Net::HTTP::Get.new(uri.request_uri)
+    peticion.basic_auth this.usuario_github,this.pass_github
+    
+    conexion = Net::HTTP.new(uri.host, uri.port)
+    conexion.use_ssl = true
+    conexion.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    
+    response = conexion.request(peticion)
+    @tareas = ActiveSupport::JSON.decode(response.body)
+  %>
+  <repeat with="&@tareas">
+    <% if this['milestone'] %>
+      <%  if this['milestone']['due_on'].to_date <= Date.today %>
+        <div class="item-container">
+          <div class="description">
+            <span class="green">&nbsp;&nbsp;&nbsp;</span>
+            <span class="todo.descr"><%= this['title'] %></span>
+            <a href="&this['html_url']">[Github]</a>
+          </div>    
+        </div>
+      <% end %>
+    <% end %>
+  </repeat>
+</repeat>

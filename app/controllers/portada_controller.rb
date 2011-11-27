@@ -16,4 +16,11 @@ class PortadaController < ApplicationController
     end
   end
 
+  def exportar_tracks
+    unless params[:check] == 'Oom7airiCea4aethKaela4faohl3iuQu'
+      redirect_to '/'
+    end
+    @proyectos = Proyecto.all
+  end
+
 end
